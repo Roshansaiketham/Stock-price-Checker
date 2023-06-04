@@ -8,6 +8,35 @@
 
 'use strict';
 
+
+const express = require('express');
+const axios = require('axios');
+const app = express();
+
+// GET request handler for /api/stock-prices
+app.get('/api/stock-prices', async (req, res) => {
+  const { stock } = req.query;
+
+  try {
+    // Make a request to retrieve stock data
+    const response = await axios.get(`https://api.example.com/stocks/${stock}`);
+
+    // Extract the stock data from the response
+    const stockData = response.data.stockData;
+
+    // Return the stock data as a JSON response
+    res.json({ stockData });
+  } catch (error) {
+    // Handle errors, such as invalid stock symbols or network failures
+    res.status(500).json({ error: 'Failed to retrieve stock data' });
+  }
+});
+
+// Start the server
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
 const express = require("express");
 const helmet = require("helmet");
 const app = express();
