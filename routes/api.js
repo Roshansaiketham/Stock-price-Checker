@@ -8,6 +8,26 @@
 
 'use strict';
 
+const express = require("express");
+const helmet = require("helmet");
+const app = express();
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"],
+    },
+  })
+);
+
+app.use(express.static("public"));
+
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
+
 var mongoose = require('mongoose')
 var objectId = mongoose.Types.ObjectId
 var request = require('request-promise-native')
